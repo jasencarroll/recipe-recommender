@@ -1,19 +1,20 @@
 """Module Imports"""
 
 import joblib
-import pandas as pd
 import numpy as np
-from sklearn.preprocessing import StandardScaler
+import pandas as pd
 from sklearn.cluster import KMeans
+from sklearn.preprocessing import StandardScaler
+
 from .config import (
+    MODELS_RELATIVE_SCALER_PATH,
     RECIPE_RECOMMENDER_MODEL_PATH,
     SCALER_MODEL_PATH,
-    MODELS_RELATIVE_SCALER_PATH,
 )
 from .validation_checks import (
+    validate_clustering_inputs,
     validate_input_data,
     validate_numeric_range,
-    validate_clustering_inputs,
     validate_recipe_df_schema,
 )
 

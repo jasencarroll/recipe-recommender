@@ -2,8 +2,9 @@
 
 import ast
 from pathlib import Path
-import streamlit as st
+
 import joblib
+import streamlit as st
 from src.config import MODELS_RELATIVE_MODEL_PATH
 
 
@@ -28,7 +29,7 @@ def load_model():
         )
         return None
 
-    except (joblib.externals.loky.process_executor.TerminatedWorkerError, IOError) as e:
+    except (OSError, joblib.externals.loky.process_executor.TerminatedWorkerError) as e:
         st.error(f"An error occurred while loading the model: {e}")
         return None
 
@@ -72,15 +73,20 @@ def main():
             "Desired complexity (0-50) for your recipe:", min_value=0, max_value=50
         )
 
-        if loaded_model is not None and user_name and cook_time and complexity:
-            if st.button("Recommend Recipes"):
-                # Get recommendations
-                recommendations = loaded_model.recommend_recipes(cook_time, complexity)
+        if (
+            loaded_model is not None
+            and user_name
+            and cook_time
+            and complexity
+            and st.button("Recommend Recipes")
+        ):
+            # Get recommendations
+            recommendations = loaded_model.recommend_recipes(cook_time, complexity)
 
-                # Store recommendations in session state
-                st.session_state["recommendations"] = recommendations
-                st.session_state["search_results"] = None
-                st.session_state["selected_recipe"] = None
+            # Store recommendations in session state
+            st.session_state["recommendations"] = recommendations
+            st.session_state["search_results"] = None
+            st.session_state["selected_recipe"] = None
 
     if (
         "recommendations" in st.session_state

@@ -1,25 +1,28 @@
 """Module Imports"""
 
-from src.preprocessing import (
-    load_data,
-    summary_data,
-    preprocess_data,
-    plot_preparation_time,
-    plot_ratings_distribution,
-    plot_ingredients_distribution,
-    plot_correlation_heatmap,
-    plot_review_sentiment,
-    plot_prep_time_vs_ingredients,
-    plot_most_used_ingredients,
-)
-from src.features import select_features
-from src.modeling import (
+from src.features import select_features  # noqa: F401
+from src.modeling import (  # noqa: F401
     optimal_number_of_clusters,
     optimal_silhouette_score,
-    train_test_split_data
+    train_test_split_data,
 )
-from src.validation_checks import check_class_distribution, check_data_leakage
-from src.recommender import RecipeRecommender
+from src.preprocessing import (
+    load_data,
+    plot_correlation_heatmap,  # noqa: F401
+    plot_ingredients_distribution,  # noqa: F401
+    plot_most_used_ingredients,  # noqa: F401
+    plot_prep_time_vs_ingredients,  # noqa: F401
+    plot_preparation_time,  # noqa: F401
+    plot_ratings_distribution,  # noqa: F401
+    plot_review_sentiment,  # noqa: F401
+    preprocess_data,  # noqa: F401
+    summary_data,
+)
+from src.recommender import RecipeRecommender  # noqa: F401
+from src.validation_checks import (  # noqa: F401
+    check_class_distribution,
+    check_data_leakage,
+)
 
 
 def main():
@@ -37,7 +40,7 @@ def main():
     #################################
 
     # Drop recipes with preparation times over 180 minutes
-    recipes_cleaned = recipes_cleaned[recipes_cleaned['minutes'] <= 180]
+    recipes_cleaned = recipes_cleaned[recipes_cleaned["minutes"] <= 180]
 
     # Summarize data for an initial understanding
     summary_data(recipes, interactions)
@@ -124,6 +127,7 @@ def main():
     # # Display recommendations
     # print("\nRecommended Recipes:")
     # print(recommendations[['minutes', 'complexity_score', 'similarity_distance']])
+
 
 if __name__ == "__main__":
     main()

@@ -5,8 +5,10 @@ Module for input validation and data quality checks in the Recipe Recommender Sy
 
 import ast
 from pathlib import Path
+
 import numpy as np
 from sklearn.model_selection import cross_val_score
+
 from .config import RECIPE_RECOMMENDER_MODEL_FILENAME
 
 

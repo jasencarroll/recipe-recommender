@@ -1,13 +1,14 @@
 """Module Imports"""
 
 import ast
-from pathlib import Path
 from collections import Counter
+
 import matplotlib.pyplot as plt
 import pandas as pd
 import seaborn as sns
 from wordcloud import WordCloud
-from .config import RAW_RECIPES_PATH, RAW_INTERACTIONS_PATH
+
+from .config import RAW_INTERACTIONS_PATH, RAW_RECIPES_PATH
 
 
 def load_data():
@@ -146,7 +147,7 @@ def plot_most_used_ingredients(recipes, top_n=10):
     most_common_ingredients = ingredient_counts.most_common(top_n)
 
     # Unzip the list of tuples
-    ingredients, counts = zip(*most_common_ingredients)
+    ingredients, counts = zip(*most_common_ingredients, strict=False)
 
     plt.figure(figsize=(10, 6))
     plt.barh(ingredients, counts, color="skyblue")
