@@ -16,8 +16,9 @@ RUN cd backend && uv sync --no-dev
 COPY backend/ ./backend/
 COPY --from=frontend-build /app/frontend/dist ./frontend/dist
 
-# Copy trained ML model files
+# Copy trained ML model and source module (needed for joblib unpickling)
 COPY food-recipe-recommender/models/ ./models/
+COPY food-recipe-recommender/src/ ./backend/src/
 
 ENV RECIPE_MODEL_PATH=/app/models/recipe_recommender_model.joblib
 
