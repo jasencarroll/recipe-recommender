@@ -4,7 +4,6 @@ version = "0.1.0"
 description = "Recipe recommendation system using Food.com dataset and K-means clustering"
 requires-python = ">=3.11"
 dependencies = [
-    "streamlit",
     "scikit-learn",
     "pandas",
     "numpy",
@@ -28,6 +27,4 @@ line-length = 88
 select = ["E", "F", "I", "UP", "B", "SIM"]
 
 [tool.ruff.lint.per-file-ignores]
-"food-recipe-recommender/app.py" = ["E501"]
-"food-recipe-recommender/main.py" = ["E501"]
 "food-recipe-recommender/src/*.py" = ["E501"]

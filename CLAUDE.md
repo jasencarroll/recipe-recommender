@@ -1,40 +1,60 @@
 # Recipe Recommender
 
-## Overview
+Recipe recommendation system using the Food.com dataset and K-means clustering, served as a full-stack web app.
 
-A recipe recommendation system built with Streamlit using the Food.com Recipes and Interactions dataset. The system uses K-means clustering to group recipes by cooking time and complexity score, then recommends recipes from the nearest cluster to user preferences. Users can also search recipes by name or ingredient.
+## Build & Development
 
-## Build / Run Commands
-
+### Backend (Python / FastAPI)
 ```bash
-uv sync                                          # Install all dependencies
-uv run streamlit run food-recipe-recommender/app.py  # Run the Streamlit app
-uv run ruff check .                              # Lint
-uv run ruff format .                             # Format
-uv run pytest                                    # Run tests
+cd backend
+uv sync
+uv run uvicorn app.main:app --reload --port 8000
+uv run pytest -v
+uv run ruff check .
+uv run ruff format .
 ```
 
-## Key Files and Directories
+### Frontend (React / Vite)
+```bash
+cd frontend
+bun install
+bun run dev          # Dev server on :5173, proxies /api to :8000
+bun run build
+bun run lint
+```
 
-- `food-recipe-recommender/app.py` -- Streamlit web application entry point
-- `food-recipe-recommender/main.py` -- Model training pipeline (data loading, EDA, feature engineering, clustering)
-- `food-recipe-recommender/src/` -- Source modules
-  - `config.py` -- Centralized path constants for data and model files
-  - `preprocessing.py` -- Data loading, cleaning, and EDA visualizations
-  - `features.py` -- Feature engineering and selection (avg_rating, complexity_score)
-  - `modeling.py` -- K-means clustering: elbow method, silhouette scoring, train/test split
-  - `recommender.py` -- `RecipeRecommender` class: trains K-means, recommends and searches recipes
-  - `validation_checks.py` -- Input validation, schema checks, data leakage detection
-- `food-recipe-recommender/models/` -- Serialized model artifacts (joblib)
-- `food-recipe-recommender/data/` -- Raw CSV datasets (not in Git)
-- `requirements.txt` -- Legacy pinned dependencies (kept for reference)
-- `pyproject.toml` -- Modern project configuration with uv
-- `railway.json` -- Railway deployment config
+## Architecture
 
-## Architecture Notes
+- **Backend**: FastAPI + scikit-learn + joblib
+- **Frontend**: React 19 + Vite + Tailwind v4 + shadcn/ui
+- **Model**: K-means clustering (k=6) on cook time and complexity score
+- **API**: All endpoints under `/api/`
 
-- The app loads a pre-trained `RecipeRecommender` object from `models/recipe_recommender_model.joblib` using joblib.
-- `RecipeRecommender` wraps a `StandardScaler` and `KMeans` (k=6) model. It scales user input (desired cook time and complexity), predicts the nearest cluster, then ranks cluster recipes by Euclidean distance.
-- Features used for clustering: `minutes` (cook time) and `complexity_score` (n_steps * n_ingredients).
-- The training pipeline in `main.py` is mostly commented out; the checked-in model artifacts are the production weights.
-- Search functionality does string matching on recipe name and ingredients columns.
+## Key Directories
+
+```
+backend/
+  app/main.py          # FastAPI app, CORS, static serving
+  app/model.py         # Model loading and inference
+  app/config.py        # Settings
+  app/routes/recipes.py  # Recommendation and search endpoints
+  app/routes/health.py   # Health check
+  tests/
+
+frontend/
+  src/App.tsx
+  src/pages/Home.tsx         # Main page
+  src/components/            # RecipeCard, RecommendForm, SearchBar
+
+food-recipe-recommender/
+  src/                       # Source modules (preprocessing, features, modeling, recommender)
+  models/                    # Serialized model artifacts (joblib) -- used by the backend
+  data/                      # Raw CSV datasets (not in Git)
+```
+
+## Domain
+
+- Loads a pre-trained `RecipeRecommender` from `food-recipe-recommender/models/recipe_recommender_model.joblib`
+- `RecipeRecommender` wraps a `StandardScaler` and `KMeans` model, scales user input, predicts the nearest cluster, then ranks recipes by Euclidean distance
+- Features: `minutes` (cook time) and `complexity_score` (n_steps * n_ingredients)
+- Search does string matching on recipe name and ingredients columns

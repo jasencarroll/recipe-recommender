@@ -7,18 +7,59 @@ on:
     branches: [main]
 
 jobs:
-  lint:
+  backend-lint:
+    name: Backend Lint
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
-      - uses: astral-sh/setup-uv@v6
-
+      - uses: astral-sh/setup-uv@v4
+      - run: uv python install 3.11
       - name: Install dependencies
+        working-directory: backend
         run: uv sync
-
       - name: Ruff check
+        working-directory: backend
         run: uv run ruff check .
-
-      - name: Ruff format check
+      - name: Ruff format
+        working-directory: backend
         run: uv run ruff format --check .
+
+  backend-test:
+    name: Backend Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v4
+      - run: uv python install 3.11
+      - name: Install dependencies
+        working-directory: backend
+        run: uv sync
+      - name: Run tests
+        working-directory: backend
+        run: uv run pytest -v
+
+  frontend-lint:
+    name: Frontend Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+      - name: Install dependencies
+        working-directory: frontend
+        run: bun install
+      - name: Lint
+        working-directory: frontend
+        run: bun run lint
+
+  frontend-build:
+    name: Frontend Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+      - name: Install dependencies
+        working-directory: frontend
+        run: bun install
+      - name: Build
+        working-directory: frontend
+        run: bun run build

@@ -1,6 +1,35 @@
-.venv/
-food-recipe-recommender/data/
-__pycache__
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+
+# Tool caches
+.ruff_cache
 .mypy_cache
 .pytest_cache
+
+# Editors
+.vscode
+.idea
+
+# OS
 .DS_Store
+
+# Frontend
+node_modules/
+
+# Env
+.env
+
+# Database
+*.db
+
+# Data
+data/
+food-recipe-recommender/data/
