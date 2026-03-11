@@ -33,8 +33,8 @@ def select_features(recipes, interactions):
     )
 
     # Fill missing values (some recipes may not have interactions)
-    recipes["avg_rating"].fillna(0)
-    recipes["num_interactions"].fillna(0)
+    recipes["avg_rating"] = recipes["avg_rating"].fillna(0)
+    recipes["num_interactions"] = recipes["num_interactions"].fillna(0)
 
     # Define a complexity score (example: combination of steps and ingredients)
     recipes["complexity_score"] = recipes["n_steps"] * recipes["n_ingredients"]
