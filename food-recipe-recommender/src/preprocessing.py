@@ -140,7 +140,7 @@ def plot_most_used_ingredients(recipes, top_n=10):
     # Flatten the list of ingredients and count occurrences
     all_ingredients = [
         ingredient
-        for sublist in recipes["ingredients"].apply(eval)
+        for sublist in recipes["ingredients"].apply(ast.literal_eval)
         for ingredient in sublist
     ]
     ingredient_counts = Counter(all_ingredients)
