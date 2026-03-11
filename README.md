@@ -2,7 +2,7 @@
 
 A full-stack recipe recommendation engine powered by K-means clustering on 41,932 Food.com recipes.
 
-**Live Demo:** [recipe-recommender-production-38e2.up.railway.app](https://recipe-recommender-production-38e2.up.railway.app)
+**Live Demo:** [recipe-recommender.jasencarroll.com](https://recipe-recommender.jasencarroll.com)
 
 ## Features
 
