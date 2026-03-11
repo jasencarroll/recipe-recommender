@@ -33,6 +33,9 @@ function Home() {
 		setActiveSection('search');
 		try {
 			const res = await fetch(`/api/recipes/search?q=${encodeURIComponent(query)}&n=10`);
+			if (!res.ok) {
+				throw new Error(`Search failed (${res.status})`);
+			}
 			const data = (await res.json()) as { recipes: Recipe[] };
 			setRecipes(data.recipes);
 			setSearchCount(data.recipes.length);
@@ -50,6 +53,9 @@ function Home() {
 		setSearchCount(null);
 		try {
 			const res = await fetch(`/api/recipes/recommend?time=${time}&complexity=${complexity}&n=5`);
+			if (!res.ok) {
+				throw new Error(`Recommendation failed (${res.status})`);
+			}
 			const data = (await res.json()) as { recipes: Recipe[] };
 			setRecipes(data.recipes);
 		} catch {

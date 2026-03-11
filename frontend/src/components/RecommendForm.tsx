@@ -35,14 +35,14 @@ function RecommendForm({ onRecommend, loading }: RecommendFormProps) {
 						<input
 							id="cook-time"
 							type="range"
-							min={0}
+							min={1}
 							max={30}
 							value={time}
 							onChange={(e) => setTime(Number(e.target.value))}
 							className="w-full"
 						/>
 						<div className="flex justify-between text-xs text-text-muted">
-							<span>0 min</span>
+							<span>1 min</span>
 							<span>30 min</span>
 						</div>
 					</div>
@@ -55,14 +55,14 @@ function RecommendForm({ onRecommend, loading }: RecommendFormProps) {
 						<input
 							id="complexity"
 							type="range"
-							min={0}
+							min={1}
 							max={50}
 							value={complexity}
 							onChange={(e) => setComplexity(Number(e.target.value))}
 							className="w-full"
 						/>
 						<div className="flex justify-between text-xs text-text-muted">
-							<span>0</span>
+							<span>1</span>
 							<span>50</span>
 						</div>
 					</div>

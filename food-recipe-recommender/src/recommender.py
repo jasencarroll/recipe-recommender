@@ -20,15 +20,15 @@ from .validation_checks import (
 
 
 class RecipeRecommender:
-    """K-Nearest Neighbors based recipe recommender system."""
+    """K-Means clustering based recipe recommender system."""
 
     def __init__(self, recipes_df, n_clusters=6):
         """
-        Initialize the KNN-based recipe recommendation system.
+        Initialize the K-Means clustering based recipe recommendation system.
 
         Args:
             recipes_df (DataFrame): Preprocessed recipes DataFrame.
-            k (int): Number of neighbors to use in KNN (default: 5).
+            n_clusters (int): Number of clusters to use in K-Means (default: 6).
         """
         validate_recipe_df_schema(recipes_df)
         validate_input_data(recipes_df)
