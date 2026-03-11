@@ -11,8 +11,10 @@ jobs:
     name: Backend Lint
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: astral-sh/setup-uv@v4
+      - uses: actions/checkout@v5
+      - uses: astral-sh/setup-uv@v6
+        env:
+          FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
       - run: uv python install 3.11
       - name: Install dependencies
         working-directory: backend
@@ -28,8 +30,10 @@ jobs:
     name: Backend Tests
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: astral-sh/setup-uv@v4
+      - uses: actions/checkout@v5
+      - uses: astral-sh/setup-uv@v6
+        env:
+          FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
       - run: uv python install 3.11
       - name: Install dependencies
         working-directory: backend
@@ -42,8 +46,10 @@ jobs:
     name: Frontend Lint
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: oven-sh/setup-bun@v2
+        env:
+          FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
       - name: Install dependencies
         working-directory: frontend
         run: bun install
@@ -55,8 +61,10 @@ jobs:
     name: Frontend Build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: oven-sh/setup-bun@v2
+        env:
+          FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
       - name: Install dependencies
         working-directory: frontend
         run: bun install
