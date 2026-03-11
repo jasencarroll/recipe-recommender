@@ -4,6 +4,7 @@ from pathlib import Path
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 
 from .config import settings
@@ -39,7 +40,14 @@ app.add_middleware(
 app.include_router(health_router)
 app.include_router(recipes_router)
 
-# Serve frontend static files in production
+# Serve frontend static files in production with SPA catch-all
 frontend_dist = Path(__file__).resolve().parent.parent.parent / "frontend" / "dist"
 if frontend_dist.is_dir():
-    app.mount("/", StaticFiles(directory=str(frontend_dist), html=True), name="static")
+    app.mount("/assets", StaticFiles(directory=frontend_dist / "assets"), name="static")
+
+    @app.get("/{path:path}")
+    async def serve_spa(path: str) -> FileResponse:
+        file = frontend_dist / path
+        if file.exists() and file.is_file():
+            return FileResponse(file)
+        return FileResponse(frontend_dist / "index.html")
